@@ -2,16 +2,16 @@
 
 1\. Создал unit-файл /etc/systemd/system/node_exporter.service со следующим содержимым:
 
-[Unit]  
-Description=Node Exporter
+>[Unit]  
+>Description=Node Exporter
 
-[Service]  
-Type=simple  
-EnvironmentFile=/etc/default/node_exporter/nodexp  
-ExecStart=/usr/local/bin/node_exporter $OPTIONS
+>[Service]  
+>Type=simple  
+>EnvironmentFile=/etc/default/node_exporter/nodexp  
+>ExecStart=/usr/local/bin/node_exporter $OPTIONS
 
-[Install]  
-WantedBy=multi-user.target
+>[Install]  
+>WantedBy=multi-user.target
 
 Добаваил его в автозагрузку командой: systemctl enable node_exporter  
 После перезагрузки автоматически запускается.  
