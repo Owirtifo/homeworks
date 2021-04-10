@@ -25,19 +25,21 @@ URL1 = 'google.com'
 URL2 = 'mail.google.com'
 URL3 = 'drive.google.com'
 
-def check_ip(URL):
-  return socket.gethostbyname(URL)
+def check_ip():
+  return {URL1: socket.gethostbyname(URL1), URL2: socket.gethostbyname(URL2), URL3: socket.gethostbyname(URL3)}
+def for_file():
+  return [{URL1: socket.gethostbyname(URL1)}, {URL2: socket.gethostbyname(URL2)}, {URL3: socket.gethostbyname(URL3)}]
 
-addr = {URL1: check_ip(URL1), URL2: check_ip(URL2), URL3: check_ip(URL3)}
+addr = check_ip()
 
 while True:
-  for i in addr:
-    print(f'{i} - {addr[i]}')
-  new_addr = {URL1: check_ip(URL1), URL2: check_ip(URL2), URL3: check_ip(URL3)}
-  for j in addr:
-    if new_addr[j] != addr[j]:
-      print(f'[ERROR] {j} IP mismatch: {addr[j]} {new_addr[j]}')
-    file = [{URL1: check_ip(URL1)}, {URL2: check_ip(URL2)}, {URL3: check_ip(URL3)}]
+  for url in addr:
+    print(f'{url} - {addr[url]}')
+  new_addr = check_ip()
+  for new_url in addr:
+    if new_addr[new_url] != addr[new_url]:
+      print(f'[ERROR] {new_url} IP mismatch: {addr[new_url]} {new_addr[new_url]}')
+    file = for_file()
     with open("addr.json", "w") as file_json:
       json.dump(file, file_json, indent=2)
     with open("addr.yaml", "w") as file_yaml:
