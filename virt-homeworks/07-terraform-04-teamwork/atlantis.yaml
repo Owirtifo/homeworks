@@ -1,0 +1,17 @@
+version: 3
+projects:
+- name: terraform-stage
+  dir: .
+  workspace: stage
+  terraform_version: v0.11.0
+  autoplan:
+    when_modified: ["*.tf"]
+    enabled: true
+projects:
+- name: terraform-prod
+  dir: .
+  workspace: prod
+  terraform_version: v0.11.0
+  autoplan:
+    when_modified: ["*.tf"]
+    enabled: true
