@@ -1,8 +1,4 @@
-## Домашнее задание к занятию "8.1 Введение в Ansible"
+## Домашнее задание к занятию "8.6 Создание собственных modules"
 
-1. Ссылка на репозиторий с Ansible playbook:
-**https://github.com/Owirtifo/ansible/tree/main/ansible4**
-2. Ссылка на репозиторий с Filebeat role:
-**https://github.com/Owirtifo/filebeat-role**
-3. Ссылка на репозиторий с Kibana role:
-**https://github.com/Owirtifo/kibana-role**
+Ссылка на репозиторий с Ansible Collection:
+**https://github.com/Owirtifo/my_own_collection/tree/master/my_own_namespace/my_collection**

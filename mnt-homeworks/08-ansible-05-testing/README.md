@@ -1,4 +1,4 @@
-## Домашнее задание к занятию "8.1 Введение в Ansible"
+## Домашнее задание к занятию "8.5 Тестирование Roles"
 
-1. Ссылка на репозиторий с Ansible Collection:
-**https://github.com/Owirtifo/my_own_collection/tree/master/my_own_namespace/my_collection**
+Ссылка на репозиторий с Ansible:
+**https://github.com/Owirtifo/ansible/tree/main/ansible4**
