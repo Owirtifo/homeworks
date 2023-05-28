@@ -4,19 +4,25 @@
 
 ### Задание 1
 
-1. Вывод запущенных подов после успешного выполнения Deployment:
+1. Ошибка после создания 2-х контейнеров — nginx и multitool:
 
 <img align="top" src="img/before_deploy.jpg">		<!--![before_deploy](img/before_deploy.jpg)-->
 
-2. Вывод запущенных подов после увеличения реплик до 2-х:
+Ошибка происходит в связи с тем, что контейнер multitool пытается использовать уже занятый на адресе 0.0.0.0 порт 80. Для исправления ошибки указываем контейнеру multitool пременную окружения HTTP_PORT со значение порта отличный от 80.
+
+2. Вывод запущенных подов после успешного выполнения Deployment:
 
 <img align="top" src="img/after_deploy.jpg">		<!--![after_deploy](img/after_deploy.jpg)-->
 
-3. Вывод созданных сервисов:
+3. Вывод запущенных подов после увеличения реплик до 2-х:
+
+<img align="top" src="img/after_scale.jpg">		<!--![after_scale](img/after_scale.jpg)-->
+
+4. Вывод созданных сервисов:
 
 <img align="top" src="img/services.jpg">		<!--![services](img/services.jpg)-->
 
-4. Проверка доступа до подов с помощью отдельного пода multitool:
+5. Проверка доступа до подов с помощью отдельного пода multitool:
 
 <img align="top" src="img/check_pods.jpg">		<!--![check_pods](img/check_pods.jpg)-->
 
