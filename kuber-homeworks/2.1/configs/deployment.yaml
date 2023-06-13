@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-app
+  labels:
+    app: my-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: my-app
+  template:
+    metadata:
+      labels:
+        app: my-app
+    spec:
+      containers:
+        - name: busybox
+          image: busybox
+          command: ['sh', '-c', 'while true; do date >> /tmp/output.txt; sleep 5; done']
+          volumeMounts:
+          - mountPath: /tmp
+            name: test-emptydir
+        - name: multitool
+          image: wbitt/network-multitool
+          volumeMounts:
+          - mountPath: /tmp
+            name: test-emptydir
+          ports:
+            - containerPort: 80
+      volumes:
+      - name: test-emptydir
+        emptyDir: {}
