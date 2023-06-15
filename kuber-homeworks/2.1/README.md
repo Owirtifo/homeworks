@@ -14,7 +14,7 @@
 
 ### Задание 2
 
-1. ВВывод успешного создания DaemonSet :
+1. Вывод успешного создания DaemonSet:
 
 <img align="top" src="img/ds.jpg">		<!--![ds](img/ds.jpg)-->
 
