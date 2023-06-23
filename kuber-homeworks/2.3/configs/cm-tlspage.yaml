@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: index-html-tls
+data:
+  index.html: |
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <title>Hi, Netology</title>
+      <!--<meta charset="UTF-8">-->
+    </head>
+    <body>
+      <h1>Защищенная страница</h1>
+    </body>
+    </html>
