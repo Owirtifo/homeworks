@@ -16,12 +16,14 @@ spec:
     spec:
       containers:
         - name: busybox
+          imagePullPolicy: IfNotPresent
           image: busybox
           command: ['sh', '-c', 'while true; do date >> /tmp/output.txt; sleep 5; done']
           volumeMounts:
           - mountPath: /tmp
             name: test-emptydir
         - name: multitool
+          imagePullPolicy: IfNotPresent
           image: wbitt/network-multitool
           volumeMounts:
           - mountPath: /tmp

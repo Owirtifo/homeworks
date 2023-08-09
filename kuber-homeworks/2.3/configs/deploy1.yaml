@@ -24,7 +24,6 @@ spec:
           ports:
             - containerPort: 80
         - name: multitool
-          image: wbitt/network-multitool
           envFrom:
             - configMapRef:
                 name: change-port

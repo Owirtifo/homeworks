@@ -1,29 +1,37 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: my-app
+  name: cache
+  namespace: app
   labels:
-    app: my-app
+    app: cache
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: my-app
+      app: cache
   template:
     metadata:
       labels:
-        app: my-app
+        app: cache
     spec:
       containers:
-        - name: multitool
+        - name: cache-mutool
           imagePullPolicy: IfNotPresent
           image: wbitt/network-multitool
-          volumeMounts:
-          - mountPath: /opt
-            name: test-pv-nfs
           ports:
             - containerPort: 80
-      volumes:
-      - name: test-pv-nfs
-        persistentVolumeClaim:
-          claimName: pvc-nfs
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cache-svc
+  namespace: app
+spec:
+  selector:
+    app: cache
+  ports:
+    - name: web
+      protocol: TCP
+      port: 80
+      targetPort: 80

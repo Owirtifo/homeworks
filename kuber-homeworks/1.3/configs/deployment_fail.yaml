@@ -16,10 +16,12 @@ spec:
     spec:
       containers:
         - name: nginx
+          imagePullPolicy: IfNotPresent
           image: nginx:1.18.0
           ports:
             - containerPort: 80
         - name: multitool
+          imagePullPolicy: IfNotPresent
           image: wbitt/network-multitool
           env:
             - name: HTTP_PORT

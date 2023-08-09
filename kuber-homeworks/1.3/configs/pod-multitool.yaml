@@ -5,6 +5,7 @@ metadata:
 spec:
   containers:
   - name: multitool-pod
+    imagePullPolicy: IfNotPresent
     image: wbitt/network-multitool
     ports:
     - containerPort: 8080

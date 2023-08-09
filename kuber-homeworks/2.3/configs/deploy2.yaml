@@ -16,6 +16,7 @@ spec:
     spec:
       containers:
         - name: nginx
+          imagePullPolicy: IfNotPresent
           image: nginx:1.18.0
           volumeMounts:
           - name: vol-index
