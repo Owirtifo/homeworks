@@ -22,7 +22,7 @@
 
 2. Вывод успешного создания и проверки прав на домен сертификата Let’s Encrypt:
 
-<img align="top" src="img/cert.jpg">		<!--![cert](img/cert.jpg)-->
+<img align="top" src="img/cert.jpg">		<!--![cert](img/cert.jpg)--> 
 
 <img align="top" src="img/cert1.jpg">		<!--![cert1](img/cert1.jpg)-->
 
