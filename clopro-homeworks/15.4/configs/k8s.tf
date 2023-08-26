@@ -1,6 +1,6 @@
 locals {
-  k8s_version = "1.22"
-  sa_name     = "myaccount"
+  k8s_version = "1.27"
+  sa_name     = "k8s-user"
 }
 
 resource "yandex_kubernetes_cluster" "k8s-regional" {
@@ -25,11 +25,10 @@ resource "yandex_kubernetes_cluster" "k8s-regional" {
     }
   }
 
-  service_account_id      = yandex_iam_service_account.myaccount.id
-  node_service_account_id = yandex_iam_service_account.myaccount.id
+  service_account_id      = yandex_iam_service_account.k8s-user.id
+  node_service_account_id = yandex_iam_service_account.k8s-user.id
   depends_on = [
-    yandex_resourcemanager_folder_iam_member.k8s-clusters-agent,
-    yandex_resourcemanager_folder_iam_member.vpc-public-admin,
+    yandex_resourcemanager_folder_iam_member.editor,
     yandex_resourcemanager_folder_iam_member.images-puller
   ]
 
@@ -40,19 +39,15 @@ resource "yandex_kubernetes_cluster" "k8s-regional" {
 
 resource "yandex_kubernetes_node_group" "ntlg-node-group" {
   cluster_id = yandex_kubernetes_cluster.k8s-regional.id
-  name       = "ntlg-node-group"
+  name = "ntlg-node-group"
 
   instance_template {
-    name       = "inst-templ"
+    name       = "node-{instance.short_id}"
     platform_id = "standard-v1"
 
     network_interface {
       nat                = true
-      subnet_ids = [
-        yandex_vpc_subnet.public-a.id,
-        yandex_vpc_subnet.public-b.id,
-        yandex_vpc_subnet.public-c.id
-      ]
+      subnet_ids = ["${yandex_vpc_subnet.public-b.id}"]
     }
 
     resources {
@@ -80,13 +75,7 @@ resource "yandex_kubernetes_node_group" "ntlg-node-group" {
 
   allocation_policy {
     location {
-      zone = "ru-central1-a"
-    }
-    location {
       zone = "ru-central1-b"
-    }
-    location {
-      zone = "ru-central1-c"
     }
   }
 }
@@ -112,30 +101,9 @@ resource "yandex_vpc_subnet" "public-c" {
   v4_cidr_blocks = ["192.168.3.0/24"]
 }
 
-resource "yandex_iam_service_account" "myaccount" {
+resource "yandex_iam_service_account" "k8s-user" {
   name        = local.sa_name
   description = "K8S regional service account"
-}
-
-resource "yandex_resourcemanager_folder_iam_member" "k8s-clusters-agent" {
-  # Сервисному аккаунту назначается роль "k8s.clusters.agent".
-  folder_id = local.folder_id
-  role      = "k8s.clusters.agent"
-  member    = "serviceAccount:${yandex_iam_service_account.myaccount.id}"
-}
-
-resource "yandex_resourcemanager_folder_iam_member" "vpc-public-admin" {
-  # Сервисному аккаунту назначается роль "vpc.publicAdmin".
-  folder_id = local.folder_id
-  role      = "vpc.publicAdmin"
-  member    = "serviceAccount:${yandex_iam_service_account.myaccount.id}"
-}
-
-resource "yandex_resourcemanager_folder_iam_member" "images-puller" {
-  # Сервисному аккаунту назначается роль "container-registry.images.puller".
-  folder_id = local.folder_id
-  role      = "container-registry.images.puller"
-  member    = "serviceAccount:${yandex_iam_service_account.myaccount.id}"
 }
 
 resource "yandex_kms_symmetric_key" "kms-key" {
@@ -145,8 +113,16 @@ resource "yandex_kms_symmetric_key" "kms-key" {
   rotation_period   = "8760h" # 1 год.
 }
 
-resource "yandex_resourcemanager_folder_iam_member" "viewer" {
+resource "yandex_resourcemanager_folder_iam_member" "editor" {
+ # Сервисному аккаунту назначается роль "editor".
   folder_id = local.folder_id
-  role      = "viewer"
-  member    = "serviceAccount:${yandex_iam_service_account.myaccount.id}"
+  role      = "editor"
+  member    = "serviceAccount:${yandex_iam_service_account.k8s-user.id}"
+}
+
+resource "yandex_resourcemanager_folder_iam_member" "images-puller" {
+  # Сервисному аккаунту назначается роль "container-registry.images.puller".
+  folder_id = local.folder_id
+  role      = "container-registry.images.puller"
+  member    = "serviceAccount:${yandex_iam_service_account.k8s-user.id}"
 }
